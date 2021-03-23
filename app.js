@@ -44,10 +44,6 @@ app.get('/users/register', (req, res) => {
   res.render('register')
 })
 
-/*
-app.post('/users/register', (req, res) => {
-  res.send('register')
-})*/
 
 app.post('/users/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
@@ -57,4 +53,11 @@ app.post('/users/register', (req, res) => {
 
 app.get('/users/logout', (req, res) => {
   res.send('logout')
+})
+
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id
+  return Todo.findByPk(id)
+    .then(todo => res.render('detail', { todo: todo.toJSON() }))
+    .catch(err => res.send(err))
 })
