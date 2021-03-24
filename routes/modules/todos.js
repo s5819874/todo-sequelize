@@ -42,7 +42,6 @@ router.put('/:id', (req, res) => {
   const userId = req.user.id
   const id = req.params.id
   const { name, isDone } = req.body
-
   Todo.findOne({ where: { userId, id } })
     .then(todo => {
       todo.name = name
@@ -52,5 +51,16 @@ router.put('/:id', (req, res) => {
     .then(() => res.redirect(`/todos/${id}`))
     .catch(err => res.send(err))
 })
+
+//delete
+router.delete('/:id', (req, res) => {
+  const UserId = req.user.id
+  const id = req.params.id
+  Todo.findOne({ where: { UserId, id } })
+    .then(todo => todo.destroy())
+    .then(() => res.redirect('/'))
+    .catch(err => res.send(err))
+})
+
 
 module.exports = router
