@@ -21,6 +21,12 @@ app.use(session({
 
 usePassport(app)
 
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()
+  next()
+})
+
 app.use(routes)
 
 app.listen(PORT, () => {
